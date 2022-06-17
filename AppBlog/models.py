@@ -1,13 +1,22 @@
-"""
 from django.db import models
+from django.contrib.auth.models import User
+from django.forms import CharField
+from django.utils import timezone
 
-# Create your models here.
-class cuenta(models.Model):
-    user = models.CharField(max_lengh=30)
-    email = models.EmailField(max_lengh=30)
-    password = models.CharField(max_length=50)
+
+#class Comentario(models.Model):
+
+
+
+class Categoria(models.Model):
+    name=models.CharField(max_length=30)
 
     def __str__(self):
-        return self.user
+        return self.name
 
-"""
+
+class Post(models.Model):
+    categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT, default=1)
+    titulo = models.CharField(max_length=255)
+    descripcion = models.TextField(null=True)
+    contenido = models.TextField()

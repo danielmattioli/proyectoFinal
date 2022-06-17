@@ -1,0 +1,17 @@
+{% extends "home.html" %}
+
+{% load static %}
+
+{% block contenido %}
+
+<h1>INGRESO LOGIN:</h1>
+
+<form action=""  method="POST">
+    {%csrf_token%}
+
+    {{form.as_p}}
+    <button type="">Iniciar</button>
+    <a href="{% url 'register' %}">Registrarse</a>
+</form>
+
+{% endblock %}
