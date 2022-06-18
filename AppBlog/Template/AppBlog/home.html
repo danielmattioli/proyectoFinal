@@ -20,16 +20,26 @@
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
             <div class="container px-4 px-lg-5">
-                <!--<a class="navbar-brand" href="index.html">Start Bootstrap</a>-->
+                <a class="navbar-brand" href="{% url 'home' %}">HOME</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'home' %}">HOME</a></li>
+                        {% if not request.user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'login' %}">Login</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'register' %}">Registrarse</a></li>
+                        {% else %}
+                        <!--imagen avatar-->
+                        <div>
+                            <img src="{{ url }}" alt="">
+                        </div>
+                        <!--Fin imagen avatar-->
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#">Hola, {{user.username}}</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'logout' %}">Logout</a></li>
+                        {%endif%}
+                        
                     </ul>
                 </div>
             </div>
@@ -57,43 +67,6 @@
         {%block contenido %}
         
         {%endblock%}
-
-
-<!--posteos traidos de la base de datos-->
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    <!-- Post preview-->
-                    <!--ACA INICARIA EL FOR-->
-                    <div class="post-preview">
-                        <a href="post.html">
-                            <h2 class="post-title">Man must explore, and this is exploration at its greatest</h2>
-                            <h3 class="post-subtitle">Problems look mighty small from 150 miles up</h3>
-                        </a>
-                        <p class="post-meta">
-                            Posted by
-                            <a href="#!">Start Bootstrap</a>
-                            on September 24, 2022
-                        </p>
-                    </div>
-                    <!--FIN DEL FOR-->
-<!--
-                    {% if Propiedades %} 
-                        <ul style="margin: auto; width: 220px;">
-                            {% for prop in Propiedades %}
-                                <li>TITULAR: {{prop.titular}}</li>
-                                <li>UBUCACION: {{prop.ubicacion}}</li>
-                                <li>DIMENSIONES: {{prop.dimensiones}}</li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        <ul style="margin: auto; width: 220px;">
-                        <p>NO SE ENCONTRARON COINCIDENCIAS!</p>
-                        </ul>
-{% endif %}
-
--->
-
                     <!-- Divider-->
                     <hr class="my-4" />
                 </div>
