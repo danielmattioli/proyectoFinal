@@ -7,7 +7,7 @@ from django.utils import timezone
 #class Comentario(models.Model):
 
 
-
+"""
 class Categoria(models.Model):
     name=models.CharField(max_length=30)
 
@@ -20,3 +20,5 @@ class Post(models.Model):
     titulo = models.CharField(max_length=255)
     descripcion = models.TextField(null=True)
     contenido = models.TextField()
+
+"""

@@ -1,9 +1,11 @@
 from django.http import HttpResponse
+from AppBlog.forms import UserEditForm
 from django.template import loader
 from django.shortcuts import render
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from AppBlog.forms import UserEditForm
 
 # Create your views here.
 def home(request):
@@ -45,3 +47,20 @@ def register(request):
     else:
         form= UserCreationForm()
     return render( request, "registro.html", {"form":form})
+
+
+def editarPerfil(request):
+    usuario = request.user
+    if request.method =="POST":
+        miFormulario=UserEditForm(request.POST)
+        if miFormulario.is_valid():
+            informacion = miFormulario.cleaned_data
+            usuario.email = informacion["email"]
+            password = informacion["password1"]
+            usuario.set_password(password)
+            usuario.save()
+            return render(request, "home.html")
+
+    else:
+        miFormulario=UserEditForm(initial={"email": usuario.email})
+    return render(request, "editar_perfil.html", {"miFormulario": miFormulario, "usuario":usuario})
