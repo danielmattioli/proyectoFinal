@@ -3,10 +3,26 @@
 {% load static %}
 
 {% block contenido %}
-{{mensaje}}
-&nbsp;
-<a href="{% url 'logout'%}">Salir</a>
-<p>estas viendo la pagina de los post</p>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Posteo 1</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Posteo 2</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+        </div>
+    </div>
+    </div>
 
 {% endblock %}
 

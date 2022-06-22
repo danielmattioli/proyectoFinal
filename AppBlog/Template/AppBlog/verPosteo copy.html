@@ -1,0 +1,23 @@
+{% extends "home.html" %}
+
+{% load static %}
+
+{% block contenido %}
+
+{%if posteos %}
+    <li>Posteos:</li>
+    {% for p in posteos%}
+        
+        {{posteos.as_p}}
+        
+        <li>{{p.Post.titulo}}--comentario: {{p.contenido}}</li>
+        <li>{{p.categoria.name}}</li>
+        <li>{{p.Comentarios}}</li>
+        <li>{{p.fecha}}</li>-->
+    {% endfor %}
+{% else %}
+<ul style="margin: auto; width: 220px;">
+    <p>NO SE ENCONTRARON POSTEOS!</p>
+</ul>
+{%endif%}
+{% endblock %}

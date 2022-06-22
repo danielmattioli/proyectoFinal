@@ -5,9 +5,6 @@ from django.utils import timezone
 from ckeditor.fields import RichTextField
 
 
-#class Comentario(models.Model):
-
-
 class Categoria(models.Model):
     name=models.CharField(max_length=30)
 
@@ -21,20 +18,24 @@ class Post(models.Model):
     descripcion = models.TextField(null=True)
     contenido = RichTextField(blank=True, null=True)
     fecha = models.DateTimeField()
+    class Meta:
+        ordering = ('-fecha',)
+        
 
     def __str__(self):
         return self.titulo
-
-
-class Comentarios(models.Model):
-    post = models.ForeignKey(Post, on_delete = models.CASCADE, related_name="Comentarios")
+    
+    
+class Comentario(models.Model):
+    Post = models.ForeignKey(Post, on_delete = models.CASCADE, related_name="Comentarios", null=True, blank=True)
     nombre = models.CharField(max_length=50)
     email = models.EmailField()
     contenido = RichTextField(blank=True, null=True)
     fecha = models.DateTimeField()
     
     def __str__(self):
-        return self.nombre
+        return self.nombre  + ' | ' + str( self.Post)
+
     
 
 class Avatar(models.Model):

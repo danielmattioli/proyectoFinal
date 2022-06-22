@@ -1,6 +1,10 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from ckeditor.fields import RichTextField
+from django.views.generic import ListView, DetailView
+
+from AppBlog.models import Post
 
 
 class UserEditForm(UserCreationForm):
@@ -15,3 +19,6 @@ class UserEditForm(UserCreationForm):
         fields = [ 'email', 'password1', 'password2'] 
         #Mensajes de ayuda
         help_texts = {k:"" for k in fields}
+
+
+

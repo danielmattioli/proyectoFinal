@@ -1,0 +1,15 @@
+{% extends "home.html" %}
+
+{% load static %}
+
+{% block contenido %}
+{% if object_list %}
+
+    {% for c in object_list %}
+    {{c.nombre}}--{{c.Post.titulo}}--{{c.Post.categoria.name}}
+
+    {%endfor%}
+{%else%}
+    objeto vacio
+{% endif %}
+{% endblock %}
