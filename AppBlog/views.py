@@ -1,13 +1,14 @@
 from django.http import HttpResponse
 from AppBlog.forms import UserEditForm
 from django.template import loader
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
-from AppBlog.forms import UserEditForm
+from AppBlog.forms import UserEditForm, PostForm
 from AppBlog.models import Avatar, Comentario, Post
 from django.views.generic import ListView, DetailView
+from django.utils import timezone
 
 
 # Create your views here.
@@ -71,22 +72,39 @@ def editarPerfil(request):
         miFormulario=UserEditForm(initial={"email": usuario.email})
     return render(request, "editar_perfil.html", {"miFormulario": miFormulario, "usuario":usuario})
 
+
+#Muestra los comentarios
 class PostList(ListView):
     model = Comentario
     template_name = "verPosteo.html"
+    #invierte orden del comentario
+    #ordering = "-fecha"
+
+#muestro los post en el html    
+def post_list(request):
+    posts = Post.objects.filter(fecha__lte=timezone.now()).order_by('fecha')
+    return render(request, 'paginas.html', {'posts': posts, 'User':'daniel'})
 
 
-
-"""
-def verPosteo(request):
-    posteos = Comentario.objects.all()
-    print()
-    print(posteos)
-    print(posteos[0].contenido)
-    print()
-    return render (request, "verPosteo.html", {"posteos":posteos })
-
-"""
 
 def formulario_nuevoPost(request):
     return render(request,"formulario_nuevoPost.html")
+
+
+
+
+def NuevoPost(request):
+    context = {}
+    if request.method == "POST":
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('guardadoExitoso')
+            #return HttpResponse("joya")
+    else:
+        form = PostForm()
+    return render(request, 'nuevo_post.html', {'form': form})
+
+
+def listo(request):
+    return render(request, "guardadoExitoso.html")

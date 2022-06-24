@@ -20,5 +20,13 @@ class UserEditForm(UserCreationForm):
         #Mensajes de ayuda
         help_texts = {k:"" for k in fields}
 
+class PostForm(forms.ModelForm):
+
+    class Meta:
+        model=Post
+        fields=("categoria", "titulo", "descripcion", "contenido", "fecha", "imagen",)
+
+
+
 
 

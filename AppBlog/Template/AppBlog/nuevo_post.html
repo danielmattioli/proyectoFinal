@@ -1,0 +1,14 @@
+{% extends "home.html" %}
+
+{% load static %}
+
+{% block contenido %}
+
+<h2>NUEVO POSTEO:</h2>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+<button type="submit" class="save btn btn-default">Guardar</button>
+</form>
+
+{% endblock %}

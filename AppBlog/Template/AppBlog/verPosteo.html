@@ -4,10 +4,15 @@
 
 {% block contenido %}
 {% if object_list %}
-
-    {% for c in object_list %}
-    {{c.nombre}}--{{c.Post.titulo}}--{{c.Post.categoria.name}}
-
+{% for post in object_list %}
+<div>
+    <h2><a href="">{{ post.titulo }}</a></h2>
+    <p>{{ post.contenido}}</p>
+    <p> Fecha: {{ post.fecha }}--{{User}}</p>
+    <img src="" alt="">
+    
+    
+</div>
     {%endfor%}
 {%else%}
     objeto vacio

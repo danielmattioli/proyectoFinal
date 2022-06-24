@@ -55,7 +55,7 @@
                             <p> </p>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary btn-lg">
-                                    <a href="{% url 'paginas' %}">ENTRAR AL BLOG</a>
+                                    <a href="{% url 'listarPost' %}">ENTRAR AL BLOG</a>
                                 </button>       
                             </div>
                         </div>
@@ -63,7 +63,6 @@
                 </div>
             </div>
         </header>
-
         {%block contenido %}
         
         {%endblock%}
@@ -72,3 +71,7 @@
                 </div>
             </div>
         </div>
+        <div class="page-header">
+            <a href="{% url 'nuevoPost' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+        </div>
+    </body>

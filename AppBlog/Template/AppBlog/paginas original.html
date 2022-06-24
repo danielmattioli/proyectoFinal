@@ -1,0 +1,64 @@
+{% extends "home.html" %}
+
+{% load static %}
+
+{% block contenido %}
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Posteo 1</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Posteo 2</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}
+
+
+
+<!--posteos traidos de la base de datos-->
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <!-- Post preview-->
+            <!--ACA INICARIA EL FOR-->
+            <div class="post-preview">
+                <a href="post.html">
+                    <h2 class="post-title">Man must explore, and this is exploration at its greatest</h2>
+                    <h3 class="post-subtitle">Problems look mighty small from 150 miles up</h3>
+                </a>
+                <p class="post-meta">
+                    Posted by
+                    <a href="#!">Start Bootstrap</a>
+                    on September 24, 2022
+                </p>
+            </div>
+            <!--FIN DEL FOR-->
+<!--
+            {% if Propiedades %} 
+                <ul style="margin: auto; width: 220px;">
+                    {% for prop in Propiedades %}
+                        <li>TITULAR: {{prop.titular}}</li>
+                        <li>UBUCACION: {{prop.ubicacion}}</li>
+                        <li>DIMENSIONES: {{prop.dimensiones}}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <ul style="margin: auto; width: 220px;">
+                <p>NO SE ENCONTRARON COINCIDENCIAS!</p>
+                </ul>
+{% endif %}
+
+-->
