@@ -1,0 +1,14 @@
+{% extends "home.html" %}
+
+{% load static %}
+
+{% block contenido %}
+
+<h2>Va a Eliminar el post</h2>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %} 
+
+    <button type="submit" class="save btn btn-default">Eliminar</button>
+</form>
+
+{% endblock %}

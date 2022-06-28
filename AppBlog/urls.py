@@ -11,12 +11,24 @@ urlpatterns = [
     path("register", views.register, name="register"),
     path("logout", LogoutView.as_view(template_name="home.html"), name="logout"),
     path("editarperfil", views.editarPerfil, name="editarperfil"),
-    #path("verPosteo", views.verPosteo, name="verPosteo"),
-    path("verposteo/", PostList.as_view(),name="verposteo"),
-    #path("formulario_nuevoPost",views.formulario_nuevoPost, name="nuevoPost"),
+    #Muestra los posteos
+    path("listarPosteos/", PostList.as_view(),name="listarPosteos"),
+    #otra forma de listar post
+    #path('listarPost', views.post_list, name='listarPost'), 
+    #crea nuevo post
     path('nuevoPost/', views.NuevoPost, name='nuevoPost'),
     path('guardadoExitoso', listo, name = 'guardadoExitoso'),
-    path('listarPost', views.post_list, name='listarPost'),
+    path("contacto", views.contacto, name="contacto"),
+    path("eliminarPosteo/<int:idpost>", views.eliminar,name="eliminarPosteo"),
+    path('eliminadoExitoso', views.eliminadoOk),
+    
+
+
+    #falta editar post
+    #ver posteo en pantalla completa con la opcion de comentar
+    #falta comentar un post
+    #mensajes entre usuarios
+    
 
 
 

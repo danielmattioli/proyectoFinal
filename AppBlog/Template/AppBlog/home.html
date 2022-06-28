@@ -33,10 +33,10 @@
                         {% else %}
                         <!--imagen avatar-->
                         <div>
-                            <img src="{{ url }}" alt="">
+                            <img src="{{ url }}" alt="" width="50" height="50">
                         </div>
                         <!--Fin imagen avatar-->
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#">Hola, {{user.username}}</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'editarperfil' %}">Hola, {{user.username}}</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'logout' %}">Logout</a></li>
                         {%endif%}
                         
@@ -55,8 +55,13 @@
                             <p> </p>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary btn-lg">
-                                    <a href="{% url 'listarPost' %}">ENTRAR AL BLOG</a>
+                                    <a href="{% url 'listarPosteos' %}">ENTRAR AL BLOG</a>
                                 </button>       
+                                {%if user.is_staff %}
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <a href="{% url 'nuevoPost' %}">NUEVO POSTEO</a>
+                                </button>       
+                                {%endif%}
                             </div>
                         </div>
                     </div>
@@ -66,12 +71,4 @@
         {%block contenido %}
         
         {%endblock%}
-                    <!-- Divider-->
-                    <hr class="my-4" />
-                </div>
-            </div>
-        </div>
-        <div class="page-header">
-            <a href="{% url 'nuevoPost' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
-        </div>
     </body>

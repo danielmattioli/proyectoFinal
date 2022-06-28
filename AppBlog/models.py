@@ -1,10 +1,7 @@
 from distutils.command.upload import upload
 from django.db import models
 from django.contrib.auth.models import User
-from django.forms import CharField, ImageField
-from django.utils import timezone
 from ckeditor.fields import RichTextField
-from django.conf import settings
 
 class Categoria(models.Model):
     name=models.CharField(max_length=30)
@@ -18,7 +15,7 @@ class Post(models.Model):
     titulo = models.CharField(max_length=255)
     descripcion = models.TextField(null=True)
     contenido = RichTextField(blank=True, null=True)
-    imagen=models.ImageField(upload_to="imagenes", null=True)
+    imagen=models.ImageField(upload_to="imagenes", null=True, blank=True)
     fecha = models.DateTimeField()
 
     class Meta:

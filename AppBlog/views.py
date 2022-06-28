@@ -1,14 +1,13 @@
 from django.http import HttpResponse
 from AppBlog.forms import UserEditForm
-from django.template import loader
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from AppBlog.forms import UserEditForm, PostForm
-from AppBlog.models import Avatar, Comentario, Post
+from AppBlog.models import Avatar, Post
 from django.views.generic import ListView, DetailView
-from django.utils import timezone
+
 
 
 # Create your views here.
@@ -32,14 +31,13 @@ def login_request(request):
             
             if user is not None:
                 login(request,user)
-                #avatar= Avatar.objects.filter(user=request.user.id)
-                #return render(request, "home.html", {"url":avatar[0].imagen.url})
-                #retorna la pagina de los post junto con un mensaje
-                return render(request,"paginas.html", {"mensaje":f"Bienvenido {usuario}"} )
+                avatar= Avatar.objects.filter(user=request.user.id)
+                return render(request, "home.html", {"url":avatar[0].image.url})
+                #return render(request, "home.html")
             else:
                 return render(request, "errorlogin.html")
         else:
-            return HttpResponse(f"LOGIN INCORRECTO {form}")
+            return HttpResponse(f"LOGIN INCORRECTO")
     form= AuthenticationForm()
     return render(request, "login.html", {"form":form})
 
@@ -55,13 +53,14 @@ def register(request):
         form= UserCreationForm()
     return render( request, "registro.html", {"form":form})
 
-
+@login_required
 def editarPerfil(request):
     usuario = request.user
     if request.method =="POST":
         miFormulario=UserEditForm(request.POST)
         if miFormulario.is_valid():
             informacion = miFormulario.cleaned_data
+            usuario.username=informacion["username"]
             usuario.email = informacion["email"]
             password = informacion["password1"]
             usuario.set_password(password)
@@ -75,26 +74,23 @@ def editarPerfil(request):
 
 #Muestra los comentarios
 class PostList(ListView):
-    model = Comentario
-    template_name = "verPosteo.html"
-    #invierte orden del comentario
-    #ordering = "-fecha"
+    model = Post
+    template_name = "listarPosteos.html"
+
+class DetallePost(DetailView):
+    modelo= Post
+    template_name ="detallePosteos.html"
+
 
 #muestro los post en el html    
-def post_list(request):
-    posts = Post.objects.filter(fecha__lte=timezone.now()).order_by('fecha')
-    return render(request, 'paginas.html', {'posts': posts, 'User':'daniel'})
+#def post_list(request):
+#    posts = Post.objects.filter(fecha__lte=timezone.now()).order_by('-fecha')
+#    return render(request, 'paginas.html', {'posts': posts, 'bandera':'true'})
 
 
-
-def formulario_nuevoPost(request):
-    return render(request,"formulario_nuevoPost.html")
-
-
-
-
+#guardo nuevos post a la db
+@login_required
 def NuevoPost(request):
-    context = {}
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
@@ -105,6 +101,30 @@ def NuevoPost(request):
         form = PostForm()
     return render(request, 'nuevo_post.html', {'form': form})
 
-
+@login_required
 def listo(request):
     return render(request, "guardadoExitoso.html")
+
+def contacto(request):
+    return render (request, "contacto.html")
+
+
+
+
+@login_required
+def eliminar(request, idpost):
+    if request.method == "POST":
+        try:
+            form= Post.objects.filter(id=idpost)
+            form.delete()
+            return redirect('eliminadoExitoso')
+        except:
+            return render(request, 'eliminadoExitoso.html')
+    else:
+        form = Post.objects.filter(id=idpost)
+    return render(request, 'eliminarPost.html', {'form': form})
+
+@login_required
+def eliminadoOk(request):
+    return render(request, "eliminadoExitoso.html")
+

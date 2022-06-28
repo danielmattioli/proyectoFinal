@@ -5,10 +5,13 @@
 {% block contenido %}
 
 <h2>NUEVO POSTEO:</h2>
+{%if user.is_staff %}
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{form.as_p}}
 <button type="submit" class="save btn btn-default">Guardar</button>
 </form>
-
+{%else%}
+    Solo el administrador puede crear nuevos post
+{%endif%}
 {% endblock %}
