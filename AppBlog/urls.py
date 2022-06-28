@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from AppBlog import views
 from django.contrib.auth.views import LogoutView
-from .views import PostList, listo
+from .views import PostList, DetallePost, listo
 
 urlpatterns = [
     path('', views.home, name = "home"),
@@ -21,15 +21,9 @@ urlpatterns = [
     path("contacto", views.contacto, name="contacto"),
     path("eliminarPosteo/<int:idpost>", views.eliminar,name="eliminarPosteo"),
     path('eliminadoExitoso', views.eliminadoOk),
-    
-
-
-    #falta editar post
-    #ver posteo en pantalla completa con la opcion de comentar
-    #falta comentar un post
-    #mensajes entre usuarios
-    
-
-
+    path("<int:id>/", DetallePost.as_view(), name="unposteo"),
 
 ]
+    #falta editar post
+    #falta comentar un post
+    #mensajes entre usuarios

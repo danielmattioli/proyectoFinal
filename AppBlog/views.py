@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from AppBlog.forms import UserEditForm
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
@@ -26,7 +26,6 @@ def login_request(request):
         if form.is_valid():
             usuario= form.cleaned_data.get("username")
             contra = form.cleaned_data.get("password")
-
             user= authenticate(username= usuario, password=contra)
             
             if user is not None:
@@ -35,11 +34,12 @@ def login_request(request):
                 return render(request, "home.html", {"url":avatar[0].image.url})
                 #return render(request, "home.html")
             else:
-                return render(request, "errorlogin.html")
+                return HttpResponse(f"usuario incorrecto2!")
         else:
-            return HttpResponse(f"LOGIN INCORRECTO")
+            return render(request, "errorlogin.html")
     form= AuthenticationForm()
     return render(request, "login.html", {"form":form})
+
 
 #registro de usuarios nuevos
 def register(request):
@@ -72,14 +72,23 @@ def editarPerfil(request):
     return render(request, "editar_perfil.html", {"miFormulario": miFormulario, "usuario":usuario})
 
 
-#Muestra los comentarios
+#Lista TODOS los posteos
 class PostList(ListView):
     model = Post
     template_name = "listarPosteos.html"
+    ordering = ['-fecha']
 
+
+
+
+#lista UN solo posteo
 class DetallePost(DetailView):
-    modelo= Post
-    template_name ="detallePosteos.html"
+    #modelo= Post
+    template_name ="unPosteo.html"
+    queryset=Post.objects.all()
+    def get_object(self):
+        id_=self.kwargs.get("id")
+        return get_object_or_404(Post,id=id_)
 
 
 #muestro los post en el html    
@@ -127,4 +136,3 @@ def eliminar(request, idpost):
 @login_required
 def eliminadoOk(request):
     return render(request, "eliminadoExitoso.html")
-
