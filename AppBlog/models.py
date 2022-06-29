@@ -28,7 +28,7 @@ class Post(models.Model):
     
 class Comentario(models.Model):
     Post = models.ForeignKey(Post, on_delete = models.CASCADE, related_name="Comentarios", null=True, blank=True)
-    nombre = models.CharField(max_length=50)
+    autor = models.CharField(max_length=50)
     email = models.EmailField()
     contenido = RichTextField(blank=True, null=True)
     fecha = models.DateTimeField()

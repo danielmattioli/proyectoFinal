@@ -1,13 +1,13 @@
-{% load static %}
 {% extends "home.html" %}
+{% load static %}
 {% block contenido %}
 
 
-{% for post in posts %}
+{% for c in coment %}
     <div>
-        <h2><a href="">{{ post.titulo }}</a></h2>
-        <p>{{ post.contenido}}</p>
-        <p> Fecha: {{ post.fecha }}--{{User}}</p>
+        <h2><a href="">{{ c.titulo }}</a></h2>
+        <p>{{ c.contenido}}</p>
+        <p> Fecha: {{ c.fecha }}</p>
         <img src="" alt="">
         
         

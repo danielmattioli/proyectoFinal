@@ -25,11 +25,12 @@
             <td align="center"><a href="{% url 'eliminarPosteo' post.id %}">BORRAR POSTEO</a></td>
             {%endif%}
             <td align="center"><a href="#">COMENTAR</a></td>
-
+            
         </tr> 
-        
+
         <tfoot>
-            <tr>.</tr>
+            <td></td>
+            <th><a href="{% url 'comentarios' %}">Ver Comentarios</a></th>
         </tfoot>
 </table>
 

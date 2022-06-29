@@ -12,6 +12,7 @@
 </style>
 
 {% for post in object_list %}
+
 <table  border="2px">
     <thead>
         <th colspan="5" ><h2>{{post.titulo}}</h2></th>
@@ -26,14 +27,10 @@
             <td align="center"><a href="{% url 'editarPosteo' pk=post.pk %}">EDITAR</a></td>
             <td align="center"><a href="{% url 'eliminarPosteo' post.id %}">BORRAR POSTEO</a></td>
             {% endif %}
-            <td align="center"><a href="#">COMENTAR</a></td>
             <td align="center"><a href="{% url 'unposteo' post.id %}">VER POST</a></td>
         </tr> 
-        
-        <tfoot>
-            <tr>.</tr>
-        </tfoot>
 </table>
+&nbsp;
 {%endfor%}
 
 

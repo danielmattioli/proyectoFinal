@@ -5,7 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from AppBlog.forms import UserEditForm, PostForm
-from AppBlog.models import Avatar, Post
+from AppBlog.models import Avatar, Comentario, Post
 from django.views.generic import ListView, DetailView
 from django.utils import timezone
 
@@ -89,6 +89,11 @@ class DetallePost(DetailView):
     def get_object(self):
         id_=self.kwargs.get("id")
         return get_object_or_404(Post,id=id_)
+
+#lista los comentarios en el html
+def listarComentarios(request):
+    comentarios = Comentario.objects.filter(fecha__lte=timezone.now()).order_by('-fecha')
+    return render(request, 'paginas.html', {'coment': comentarios})
 
 
 #muestro los post en el html    

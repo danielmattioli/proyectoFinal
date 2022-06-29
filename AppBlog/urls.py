@@ -22,6 +22,7 @@ urlpatterns = [
     path('eliminadoExitoso', views.eliminadoOk),
     path("<int:id>/", DetallePost.as_view(), name="unposteo"),
     path("editarPosteos/<int:pk>", views.editarPosteo, name="editarPosteo"),
+    path("comentarios", views.listarComentarios, name="comentarios"),
     
 ]
 
