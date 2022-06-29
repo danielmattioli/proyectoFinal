@@ -15,7 +15,7 @@ class Post(models.Model):
     titulo = models.CharField(max_length=255)
     descripcion = models.TextField(null=True)
     contenido = RichTextField(blank=True, null=True)
-    imagen=models.ImageField(upload_to="imagenes", null=True, blank=True)
+    imagen=models.ImageField(upload_to="imagenes")
     fecha = models.DateTimeField()
 
     class Meta:

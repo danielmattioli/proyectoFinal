@@ -21,7 +21,7 @@
         </tr>
         <tr>
             {%if user.is_staff %}
-            <td align="center"><a href="#">EDITAR</a></td>
+            <td align="center"><a href="{% url 'editarPosteo' pk=post.pk %}">EDITAR</a></td>
             <td align="center"><a href="{% url 'eliminarPosteo' post.id %}">BORRAR POSTEO</a></td>
             {%endif%}
             <td align="center"><a href="#">COMENTAR</a></td>

@@ -17,14 +17,13 @@
         <th colspan="5" ><h2>{{post.titulo}}</h2></th>
     </thead>
     <tbody>
-       
         <tr><td rowspan="4">  <img src="{{post.imagen.url}}" alt="imagen" width="250" height="250"></td></tr>
         <tr>
             <td colspan="4">{{post.descripcion}}</td>
         </tr>
         <tr>
             {% if user.is_staff %}
-            <td align="center"><a href="#">EDITAR</a></td>
+            <td align="center"><a href="{% url 'editarPosteo' pk=post.pk %}">EDITAR</a></td>
             <td align="center"><a href="{% url 'eliminarPosteo' post.id %}">BORRAR POSTEO</a></td>
             {% endif %}
             <td align="center"><a href="#">COMENTAR</a></td>

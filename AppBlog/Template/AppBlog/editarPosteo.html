@@ -1,0 +1,10 @@
+{% extends 'home.html' %}
+
+{% block contenido %}
+    <h2>Editar Post</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Guardar Cambios</button>
+    </form>
+{% endblock %}

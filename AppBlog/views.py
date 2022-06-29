@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from AppBlog.forms import UserEditForm, PostForm
 from AppBlog.models import Avatar, Post
 from django.views.generic import ListView, DetailView
-
+from django.utils import timezone
 
 
 # Create your views here.
@@ -136,3 +136,21 @@ def eliminar(request, idpost):
 @login_required
 def eliminadoOk(request):
     return render(request, "eliminadoExitoso.html")
+
+
+def editarPosteo(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = PostForm(request.POST, request.FILES, instance=post)
+
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.fecha = timezone.now()
+            post.save()
+            return redirect('PosteoEditado')
+    else:
+        form = PostForm(instance=post)
+    return render(request, 'editarPosteo.html', {'form': form})
+
+def listo2(request):
+    return render(request, "modificacionExitosa.html")
