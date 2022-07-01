@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 
-from AppBlog.models import Post
+from AppBlog.models import Comentario, Post
 
 
 class UserEditForm(UserCreationForm):
@@ -26,6 +26,8 @@ class PostForm(forms.ModelForm):
         fields=("categoria", "titulo", "descripcion", "contenido", "fecha", "imagen",)
 
 
-
-
+#class ComentForm(forms.ModelForm):
+#    class Meta:
+#        model=Comentario
+#        fields=("Post", "autor", "contenido", "fecha", "email",)
 

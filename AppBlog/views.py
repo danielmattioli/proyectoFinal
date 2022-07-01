@@ -14,8 +14,8 @@ from django.utils import timezone
 def home(request):
     return render(request, "home.html")
     
-def paginas(request):
-    return render(request, "paginas.html")
+def comentarios(request):
+    return render(request, "comentarios.html")
 
 def login_request(request):
     if request.method =="POST":
@@ -30,9 +30,9 @@ def login_request(request):
             
             if user is not None:
                 login(request,user)
-                avatar= Avatar.objects.filter(user=request.user.id)
-                return render(request, "home.html", {"url":avatar[0].image.url})
-                #return render(request, "home.html")
+                #avatar= Avatar.objects.filter(user=request.user.id)
+                #return render(request, "home.html", {"url":avatar[0].image.url})
+                return render(request, "home.html")
             else:
                 return HttpResponse(f"usuario incorrecto2!")
         else:
@@ -73,10 +73,10 @@ def editarPerfil(request):
 
 
 #Lista TODOS los posteos
-class PostList(ListView):
-    model = Post
-    template_name = "listarPosteos.html"
-    ordering = ['-fecha']
+#class PostList(ListView):
+#    model = Post
+#    template_name = "listarPosteos.html"
+#    ordering = ['-fecha']
 
 
 
@@ -90,16 +90,10 @@ class DetallePost(DetailView):
         id_=self.kwargs.get("id")
         return get_object_or_404(Post,id=id_)
 
-#lista los comentarios en el html
-def listarComentarios(request):
-    comentarios = Comentario.objects.filter(fecha__lte=timezone.now()).order_by('-fecha')
-    return render(request, 'paginas.html', {'coment': comentarios})
-
-
 #muestro los post en el html    
-#def post_list(request):
-#    posts = Post.objects.filter(fecha__lte=timezone.now()).order_by('-fecha')
-#    return render(request, 'paginas.html', {'posts': posts, 'bandera':'true'})
+def post_list(request):
+    posts = Post.objects.filter(fecha__lte=timezone.now()).order_by('-fecha')
+    return render(request, 'listarPosteos.html', {'posts': posts})
 
 
 #guardo nuevos post a la db
@@ -159,3 +153,14 @@ def editarPosteo(request, pk):
 
 def listo2(request):
     return render(request, "modificacionExitosa.html")
+
+
+#lista los comentarios y se los manda a comentarios.html
+def listarComentarios(request,pk):
+    comentarios = Comentario.objects.filter(post_id=pk)
+    print("pk=", pk)
+    print(comentarios)
+    return render(request, 'comentarios.html', {'coment': comentarios} )
+
+def nuevoComentario():
+    pass

@@ -12,25 +12,27 @@
 </style>
 <table  border="2px">
     <thead>
-        <th colspan="5" ><h2>{{object.titulo}}</h2></th>
+        <th colspan="5" ><h2>{{object.titulo|safe}}--{{object.id}}</h2></th>
     </thead>
     <tbody>
         <tr><td rowspan="4">  <img src="{{post.imagen.url}}" alt="imagen" width="250" height="250"></td></tr>
         <tr>
-            <td colspan="4">{{object.contenido}}</td>
+            <td colspan="4">{{object.contenido|safe}}</td>
         </tr>
         <tr>
             {%if user.is_staff %}
             <td align="center"><a href="{% url 'editarPosteo' pk=post.pk %}">EDITAR</a></td>
             <td align="center"><a href="{% url 'eliminarPosteo' post.id %}">BORRAR POSTEO</a></td>
             {%endif%}
-            <td align="center"><a href="#">COMENTAR</a></td>
-            
+            {% if user.is_authenticated %}
+            <td align="center"><a href="{% url 'nuevoComentario' %}">COMENTAR</a></td>
+            {% endif %}
         </tr> 
 
         <tfoot>
-            <td></td>
-            <th><a href="{% url 'comentarios' %}">Ver Comentarios</a></th>
+            <td>
+                <th><a href="{% url 'comentarios' object.id %}">Ver Comentarios</a></th>
+            </td>
         </tfoot>
 </table>
 

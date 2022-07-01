@@ -1,0 +1,22 @@
+{% extends "home.html" %}
+{% load static %}
+{% block contenido %}
+
+{% if coment %}
+{% for c in coment %}
+<style>
+    p{
+    display: inline;
+    }
+</style>
+
+    <div>
+        <p>{{c.autor.id}}</p>
+        <p>{{c.contenido|safe}}</p>
+    </div>
+{% endfor %}
+{%else%}
+no hay comentarios aun
+{%endif%}
+{% endblock %}
+

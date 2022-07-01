@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block contenido %}
-{% if posts %}
+{% if object_list %}
 {% csrf_token %}
 <style>
     table, th, td{
@@ -11,7 +11,7 @@
     
 </style>
 
-{% for post in posts %}
+{% for post in object_list %}
 &nbsp;
 <table  border="2px">
     <thead>
