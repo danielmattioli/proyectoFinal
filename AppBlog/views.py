@@ -1,18 +1,21 @@
 from django.http import HttpResponse
-from AppBlog.forms import UserEditForm
+from AppBlog.forms import UserEditForm, Coment_crear
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
-from AppBlog.forms import UserEditForm, PostForm
-from AppBlog.models import Avatar, Comentario, Post
-from django.views.generic import ListView, DetailView
+from AppBlog.forms import UserEditForm, PostForm, ComentForm
+from AppBlog.models import Comentario, Post, Avatar
+from django.views.generic import ListView, DetailView, CreateView
 from django.utils import timezone
 
 
 # Create your views here.
 def home(request):
     return render(request, "home.html")
+    
+def aboutMe(request):
+    return render(request, "aboutMe.html")
     
 def comentarios(request):
     return render(request, "comentarios.html")
@@ -30,9 +33,9 @@ def login_request(request):
             
             if user is not None:
                 login(request,user)
-                #avatar= Avatar.objects.filter(user=request.user.id)
-                #return render(request, "home.html", {"url":avatar[0].image.url})
-                return render(request, "home.html")
+                avatar= Avatar.objects.filter(user=request.user.id)
+                return render(request, "home.html", {"url":avatar[0].image.url})
+                #return render(request, "home.html",{"url":"AppBlog/asset/img/loginDefault.jpg"})
             else:
                 return HttpResponse(f"usuario incorrecto2!")
         else:
@@ -73,10 +76,10 @@ def editarPerfil(request):
 
 
 #Lista TODOS los posteos
-#class PostList(ListView):
-#    model = Post
-#    template_name = "listarPosteos.html"
-#    ordering = ['-fecha']
+class PostList(ListView):
+    model = Post
+    template_name = "listarPosteos.html"
+    ordering = ['-fecha']
 
 
 
@@ -104,7 +107,6 @@ def NuevoPost(request):
         if form.is_valid():
             form.save()
             return redirect('guardadoExitoso')
-            #return HttpResponse("joya")
     else:
         form = PostForm()
     return render(request, 'nuevo_post.html', {'form': form})
@@ -141,19 +143,21 @@ def editarPosteo(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES, instance=post)
-
         if form.is_valid():
-            post = form.save(commit=False)
-            post.fecha = timezone.now()
+            post=form.cleaned_data
+            post = form.save()
             post.save()
             return redirect('PosteoEditado')
     else:
+        #crea el formulario y lo llena con los datos que tenia guardados del post
         form = PostForm(instance=post)
     return render(request, 'editarPosteo.html', {'form': form})
 
 def listo2(request):
     return render(request, "modificacionExitosa.html")
 
+def listo3(request):
+    return render(request, "comentarioGuardado.html")
 
 #lista los comentarios y se los manda a comentarios.html
 def listarComentarios(request,pk):
@@ -162,5 +166,41 @@ def listarComentarios(request,pk):
     print(comentarios)
     return render(request, 'comentarios.html', {'coment': comentarios} )
 
-def nuevoComentario():
-    pass
+"""
+def nuevoComentario(request):
+    if request.method == "POST":
+        #guardo el usuario que viene de posteo
+        autor=request.POST["usuario"]
+        
+        print("autor", autor)
+        
+        form = Coment_crear(request.POST)
+        #print("miFormulario", miFormulario)
+        
+        if form.is_valid():
+            form= form.cleaned_data
+            #print(form)
+            #miFormulario= ComentForm(usuario=autor, instance=form)
+            #guardo usuario que viene del html
+            #miFormulario.usuario = "usuario"
+            #miFormulario.post
+            #miFormulario.email = "email"
+            #miFormulario.comentario = request.POST["contenido"]
+            #miFormulario.fecha = request.POST["fecha"]
+            
+            #print(miFormulario)
+            
+            #miFormulario.save()
+            #return redirect('comentarioGuardadoExitoso')
+    else:
+        form = Coment_crear()
+    return render(request, 'nuevo_comentario.html', {'form': form})
+"""
+
+
+class NuevoComentario(CreateView):
+    model = Comentario
+    form_class: ComentForm
+    template_name = "nuevo_comentario.html"
+    fields= "__all__"
+    #success_url: reverse_lazy('home')

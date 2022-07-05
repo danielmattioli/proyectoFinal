@@ -1,8 +1,7 @@
-from django.contrib import admin
 from django.urls import path
 from AppBlog import views
 from django.contrib.auth.views import LogoutView
-from .views import DetallePost, listo,listo2
+from .views import DetallePost, listo,listo2, listo3,NuevoComentario, PostList
 
 urlpatterns = [
     path('', views.home, name = "home"),
@@ -13,11 +12,12 @@ urlpatterns = [
     path("editarperfil", views.editarPerfil, name="editarperfil"),
     #otra forma de listar post pero devo traer del from a PostList
     #path("listarPosteos/", PostList.as_view(),name="listarPosteos"),
-    
     path('listarPosteos/', views.post_list, name='listarPosteos'), 
     path('nuevoPost/', views.NuevoPost, name='nuevoPost'),
-    path('nuevoComentario/', views.nuevoComentario, name='nuevoComentario'),
+    #path('nuevoComentario/', views.nuevoComentario, name='nuevoComentario'),
+    path("nuevoComentario/<int:pk>",NuevoComentario.as_view(), name='nuevoComentario'),
     path('guardadoExitoso', listo, name = 'guardadoExitoso'),
+    path('comentarioGuardado', listo3, name = 'comentarioGuardado'),
     path('PosteoEditado', listo2, name="PosteoEditado"),
     path("contacto", views.contacto, name="contacto"),
     path("eliminarPosteo/<int:idpost>", views.eliminar,name="eliminarPosteo"),
@@ -25,8 +25,7 @@ urlpatterns = [
     path("<int:id>/", DetallePost.as_view(), name="unposteo"),
     path("editarPosteos/<int:pk>", views.editarPosteo, name="editarPosteo"),
     path("comentarios/<int:pk>", views.listarComentarios, name="comentarios"),
+    path("aboutMe",views.aboutMe, name="aboutMe"),
     
 ]
 
-    #falta comentar un post
-    #mensajes entre usuarios

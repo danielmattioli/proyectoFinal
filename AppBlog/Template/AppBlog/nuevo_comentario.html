@@ -5,10 +5,11 @@
 {% block contenido %}
 
 <h2>NUEVO COMENTARIO:</h2>
-<form method="POST" enctype="multipart/form-data">
+<form method="POST" >
     {% csrf_token %}
-    {{form.media}}
     {{form.as_p}}
-<button type="submit" class="save btn btn-default">Guardar</button>
+    
+<button type="submit" class="btn btn-success">Comentar</button>
 </form>
+
 {% endblock %}

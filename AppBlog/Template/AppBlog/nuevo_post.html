@@ -10,7 +10,7 @@
     {% csrf_token %}
     {{form.media}}
     {{form.as_p}}
-<button type="submit" class="save btn btn-default">Guardar</button>
+<button type="submit" class="btn btn-success">Guardar</button>
 </form>
 {%else%}
     Solo el administrador puede crear nuevos post

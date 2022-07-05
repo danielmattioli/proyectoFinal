@@ -2,21 +2,20 @@
 {% load static %}
 {% block contenido %}
 
-{% if coment %}
-{% for c in coment %}
-<style>
-    p{
-    display: inline;
-    }
-</style>
 
+{% if coment %}
+<h2>COMENTARIOS:</h2>
+{% for c in coment %}
     <div>
-        <p>{{c.autor.id}}</p>
-        <p>{{c.contenido|safe}}</p>
+        <strong>
+            <p>Autor: {{c.usuario}}--{{c.fecha}}</p> 
+        </strong>
+            <p> {{c.contenido|safe}}</p>
     </div>
 {% endfor %}
+
 {%else%}
-no hay comentarios aun
+<h2>no hay comentarios aun..... </h2>
 {%endif%}
 {% endblock %}
 
